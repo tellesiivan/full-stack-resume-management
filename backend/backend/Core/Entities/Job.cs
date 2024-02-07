@@ -2,7 +2,7 @@ using backend.Core.Enums;
 
 namespace backend.Core.Entities;
 
-public abstract class Job: BaseEntity
+public class Job: BaseEntity
 {
     public string Title { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;

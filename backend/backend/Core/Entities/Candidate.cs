@@ -1,6 +1,6 @@
 namespace backend.Core.Entities;
 
-public abstract class Candidate: BaseEntity
+public class Candidate: BaseEntity
 {
     public string FirstName { get; set; } = string.Empty;
     public string LastName { get; set; } = string.Empty;
