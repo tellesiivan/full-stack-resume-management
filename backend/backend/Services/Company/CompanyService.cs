@@ -2,7 +2,6 @@ using System.Net;
 using AutoMapper;
 using backend.Core.Context;
 using backend.Core.Dtos.Company;
-using backend.Core.Entities;
 using backend.Core.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,7 +17,6 @@ public class CompanyService(ApplicationDbContext applicationDbContext, IMapper m
             var newCompany = mapper.Map<Core.Entities.Company>(companyCreationDto);
             await applicationDbContext.Companies.AddAsync(newCompany);
             await applicationDbContext.SaveChangesAsync();
-
             response.StatusCode = HttpStatusCode.Created;
         }
         catch (Exception e)
@@ -107,6 +105,30 @@ public class CompanyService(ApplicationDbContext applicationDbContext, IMapper m
             response.ErrorMessage = e.Message;
         }
 
+        return response;
+    }
+
+    public async Task<BaseResponse> DeleteCompanyById(long id)
+    {
+        var response = new BaseResponse();
+        try
+        {
+            var matchedCompany = await applicationDbContext.Companies.FindAsync(id);
+            if (matchedCompany is null)
+            {
+                throw new Exception("Company with the provided id does not exist");
+            }
+
+            applicationDbContext.Companies.Remove(matchedCompany);
+            await applicationDbContext.SaveChangesAsync();
+            response.Message = $"Successfully deleted the company with the following id:{id}";
+        }
+        catch (Exception e)
+        {
+            response.IsSuccess = false;
+            response.Message = e.Message;
+        }
+        
         return response;
     }
 }

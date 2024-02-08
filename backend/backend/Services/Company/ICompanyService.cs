@@ -9,4 +9,5 @@ public interface ICompanyService
     
     Task<Response<List<Core.Entities.Company>>> SearchCompanies(CompanySearchQuery searchQuery);
     Task<Response<Core.Entities.Company>> GetCompanyById(long id);
+    Task<BaseResponse> DeleteCompanyById(long id);
 }

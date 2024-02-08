@@ -2,6 +2,7 @@ using System.Text.Json.Serialization;
 using backend.Core.AuthMapperConfig;
 using backend.Core.Context;
 using backend.Services.Company;
+using backend.Services.Jobs;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -27,6 +28,7 @@ builder.Services.AddSwaggerGen();
 
 // scopes
 builder.Services.AddScoped<ICompanyService, CompanyService>();
+builder.Services.AddScoped<IJobsService, JobsService>();
 
 // automapper 
 builder.Services.AddAutoMapper(typeof(AutoMapperConfig));
