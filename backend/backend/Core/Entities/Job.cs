@@ -13,5 +13,5 @@ public class Job: BaseEntity
     public Company? Company { get; set; }
     
     // candidate relation
-    public ICollection<Candidate> Candidates { get; set; }
+    public ICollection<Candidate>? Candidates { get; set; }
 }
