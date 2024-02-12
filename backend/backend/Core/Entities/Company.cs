@@ -9,5 +9,4 @@ public class Company : BaseEntity
     
     // relations
     public ICollection<Job>? JobListings { get; set; }
-    
 }

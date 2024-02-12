@@ -37,8 +37,8 @@ public class CompanyService(ApplicationDbContext applicationDbContext, IMapper m
         
             // get companies as a queryable object(include jobs + candidates)
             var companiesQueryable = applicationDbContext.Companies
-                .Include(c => c.JobListings)!
-                .ThenInclude(j => j.Candidates)
+                // .Include(c => c.JobListings)
+                // .ThenInclude(j => j.Candidates)
                 .AsQueryable();
             
             // make conditional checks based on searchQuery and query against the queryable object

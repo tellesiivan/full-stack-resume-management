@@ -1,4 +1,5 @@
 using AutoMapper;
+using backend.Core.Dtos.Candidate;
 using backend.Core.Dtos.Company;
 using backend.Core.Dtos.Jobs;
 using backend.Core.Entities;
@@ -16,9 +17,16 @@ public class AutoMapperConfig: Profile
         CreateMap<JobCreateDto, Job>().ReverseMap();
         CreateMap<JobResponseDto, Job>()
             .ReverseMap()
-            .ForMember(destinationMember => destinationMember.CompanyName, 
+            .ForMember(destinationMember => destinationMember.CompanyName,
                 memberOptions => memberOptions.MapFrom(
-                job => job.Company!.Name));
+                    job => job.Company!.Name));
         // candidate
+        CreateMap<CandidatesResponseDto, Candidate>()
+            .ReverseMap()
+            // we wan to make our destination member CandidatesResponseDto JobTitle property equal to the source Candidate candidate.Job!.Title
+            .ForMember(destinationMember => destinationMember.JobTitle, 
+                memberOptions =>
+                memberOptions.MapFrom(candidate => candidate.Job!.Title));
+        CreateMap<Candidate, CandidateCreateDto>().ReverseMap();
     }
 }

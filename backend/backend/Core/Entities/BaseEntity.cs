@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 namespace backend.Core.Entities;
 
 // abstract can only be inherited
-public abstract class BaseEntity
+public class BaseEntity
 {
     [Key]
     public long Id { get; set; }
