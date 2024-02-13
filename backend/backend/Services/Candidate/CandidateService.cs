@@ -5,6 +5,8 @@ using backend.Core.Context;
 using backend.Core.Dtos.Candidate;
 using backend.Core.Models;
 using backend.Services.Jobs;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace backend.Services.Candidate;
 
@@ -48,7 +50,7 @@ public class CandidateService(IJobsService jobsService, ApplicationDbContext app
             // Save our file url to our entity
             candidate.ResumeUrl = resumeUrl;
             
-            applicationDbContext.Candidates.Add(candidate);
+            await applicationDbContext.Candidates.AddAsync(candidate);
             await applicationDbContext.SaveChangesAsync();
             
             response.Message = "Candidate created successfully";
@@ -65,5 +67,33 @@ public class CandidateService(IJobsService jobsService, ApplicationDbContext app
     public async Task<BaseResponse> DeleteCandidate(long id)
     {
         throw new NotImplementedException();
+    }
+
+    public async Task<Response<CandidatesResponseDto>> GetCandidateById(long id)
+    {
+        var response = new Response<CandidatesResponseDto>();
+        return response;
+    }
+
+    public async Task<Response<IEnumerable<CandidatesResponseDto>>> GetCandidates()
+    {
+        var response = new Response<IEnumerable<CandidatesResponseDto>>();
+        try
+        {
+            var candidates = await applicationDbContext.Candidates
+                .Include(candidate =>
+                    candidate.Job)
+                .ToListAsync();
+
+            var convertedCandidates = mapper.Map<IEnumerable<CandidatesResponseDto>>(candidates);
+            response.Data = convertedCandidates; 
+        }
+        catch (Exception e)
+        {
+            response.ErrorMessage = e.Message;
+            response.IsSuccess = false;
+        }
+
+        return response;
     }
 }
