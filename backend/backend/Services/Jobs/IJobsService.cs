@@ -8,6 +8,6 @@ public interface IJobsService
 {
     Task<BaseResponse> CreateAJob(JobCreateDto jobCreateDto);
     Task<BaseResponse> DeleteAJobById(long id);
-    Task<Response<Job>> GetJobById(long id);
+    Task<Response<JobResponseDto>> GetJobById(long id);
     Task<Response<List<JobResponseDto>>> SearchJobs(JobsSearchQuery searchQuery);
 }

@@ -81,8 +81,8 @@ public class CandidateService(IJobsService jobsService, ApplicationDbContext app
         try
         {
             var candidates = await applicationDbContext.Candidates
-                .Include(candidate =>
-                    candidate.Job)
+                // .Include(candidate =>
+                //     candidate.Job)
                 .ToListAsync();
 
             var convertedCandidates = mapper.Map<IEnumerable<CandidatesResponseDto>>(candidates);

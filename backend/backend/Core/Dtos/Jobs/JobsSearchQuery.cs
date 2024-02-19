@@ -7,4 +7,5 @@ public class JobsSearchQuery: BaseSearchQuery
 {
     public string? Title { get; set; }
     public JobLevel? JobLevel { get; set; }
+    public int? CompanyId { get; set; }
 }

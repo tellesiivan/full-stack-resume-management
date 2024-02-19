@@ -65,9 +65,9 @@ public class JobsService(ApplicationDbContext applicationDbContext, IMapper mapp
         return response;
     }
 
-    public async Task<Response<Job>> GetJobById(long id)
+    public async Task<Response<JobResponseDto>> GetJobById(long id)
     {
-        var response = new Response<Job>();
+        var response = new Response<JobResponseDto>();
         try
         {
             var jobMatched = await FindMatchedJob(id);
@@ -75,8 +75,8 @@ public class JobsService(ApplicationDbContext applicationDbContext, IMapper mapp
             {
                 throw new Exception("Job with the provided id does not exist");
             }
-
-            response.Data = jobMatched;
+          
+            response.Data = mapper.Map<JobResponseDto>(jobMatched);
             response.StatusCode = HttpStatusCode.OK;
         }
         catch (Exception e)
@@ -93,13 +93,17 @@ public class JobsService(ApplicationDbContext applicationDbContext, IMapper mapp
         try
         {
             var queryableJobs = applicationDbContext.Jobs
-                .Include(job => job.Candidates)
                 .Include(job => job.Company)
                 .AsQueryable();
             
             if (searchQuery.JobLevel.HasValue)
             {
                 queryableJobs = queryableJobs.Where(job => job.JobLevel == searchQuery.JobLevel);
+            }
+
+            if (searchQuery.CompanyId is not null)
+            {
+                queryableJobs = queryableJobs.Where(job => job.CompanyId == searchQuery.CompanyId);
             }
 
             if (!string.IsNullOrEmpty(searchQuery.Title))
@@ -130,6 +134,6 @@ public class JobsService(ApplicationDbContext applicationDbContext, IMapper mapp
 
 
     private async Task<Job?> FindMatchedJob(long id) => await applicationDbContext.Jobs
-        .Include(job => job.Candidates)
+        .Include(job => job.Company)
         .FirstOrDefaultAsync(job => job.Id == id);
 }

@@ -2,6 +2,7 @@ using System.Net;
 using AutoMapper;
 using backend.Core.Context;
 using backend.Core.Dtos.Company;
+using backend.Core.Dtos.Jobs;
 using backend.Core.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -29,16 +30,14 @@ public class CompanyService(ApplicationDbContext applicationDbContext, IMapper m
         return response;
     }
 
-    public async Task<Response<List<Core.Entities.Company>>> SearchCompanies(CompanySearchQuery searchQuery)
+    public async Task<Response<List<CompanyResponseDto>>> SearchCompanies(CompanySearchQuery searchQuery)
     {
-        var response = new Response<List<Core.Entities.Company>>();
+        var response = new Response<List<CompanyResponseDto>>();
         try
         {
         
             // get companies as a queryable object(include jobs + candidates)
             var companiesQueryable = applicationDbContext.Companies
-                // .Include(c => c.JobListings)
-                // .ThenInclude(j => j.Candidates)
                 .AsQueryable();
             
             // make conditional checks based on searchQuery and query against the queryable object
@@ -69,7 +68,8 @@ public class CompanyService(ApplicationDbContext applicationDbContext, IMapper m
             // skip the first X number of items and Take(get) Y number of items
             var companyList = await companiesQueryable.Skip(skipNumber).Take(searchQuery.PageSize).ToListAsync();
 
-            response.Data = companyList;
+
+            response.Data = companyList.Select(mapper.Map<CompanyResponseDto>).ToList();
             response.StatusCode = HttpStatusCode.OK;
             
 
@@ -83,9 +83,9 @@ public class CompanyService(ApplicationDbContext applicationDbContext, IMapper m
         return response;
     }
 
-    public async Task<Response<Core.Entities.Company>> GetCompanyById(long id)
+    public async Task<Response<CompanyResponseDto>> GetCompanyById(long id)
     {
-        var response = new Response<Core.Entities.Company>();
+        var response = new Response<CompanyResponseDto>();
         try
         {
             var matchedCompany = await applicationDbContext.Companies.FirstOrDefaultAsync(
@@ -95,7 +95,7 @@ public class CompanyService(ApplicationDbContext applicationDbContext, IMapper m
             {
                 throw new Exception("There is no company with the ID provided");
             }
-            response.Data = matchedCompany;
+            response.Data = mapper.Map<CompanyResponseDto>(matchedCompany);
             response.StatusCode = HttpStatusCode.OK;
         }
         catch (Exception e)

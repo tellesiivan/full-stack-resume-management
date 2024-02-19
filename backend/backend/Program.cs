@@ -28,6 +28,9 @@ builder.Services.AddSwaggerGen();
     });
 
 // scopes
+// builder.Services.AddControllers().AddJsonOptions(x =>
+//     x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);
+
 builder.Services.AddScoped<ICompanyService, CompanyService>();
 builder.Services.AddScoped<IJobsService, JobsService>();
 builder.Services.AddScoped<ICandidateService, CandidateService>();
@@ -44,6 +47,16 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
    
 }
+
+// CORS
+app.UseCors(opts =>
+{
+    opts.AllowAnyOrigin()
+        .AllowAnyHeader()
+        .AllowAnyMethod();
+});
+
+app.UseAuthorization();
 
 app.MapControllers();
 

@@ -11,5 +11,5 @@ public class Candidate: BaseEntity
     
     // relations
     public long JobId { get; set; }
-    public Job? Job { get; set; }
+    // public Job? Job { get; set; }
 }

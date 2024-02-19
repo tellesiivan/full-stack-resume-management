@@ -13,20 +13,16 @@ public class AutoMapperConfig: Profile
         // company
         // from CompanyCreationDto to Company
         CreateMap<CompanyCreationDto, Company>().ReverseMap();
+        CreateMap<CompanyResponseDto, Company>().ReverseMap();
         // job
         CreateMap<JobCreateDto, Job>().ReverseMap();
         CreateMap<JobResponseDto, Job>()
-            .ReverseMap()
-            .ForMember(destinationMember => destinationMember.CompanyName,
-                memberOptions => memberOptions.MapFrom(
-                    job => job.Company!.Name));
+            .ReverseMap();
         // candidate
         CreateMap<CandidatesResponseDto, Candidate>()
-            .ReverseMap()
+            .ReverseMap();
             // we wan to make our destination member CandidatesResponseDto JobTitle property equal to the source Candidate candidate.Job!.Title
-            .ForMember(destinationMember => destinationMember.JobTitle, 
-                memberOptions =>
-                memberOptions.MapFrom(candidate => candidate.Job!.Title));
+            
         CreateMap<Candidate, CandidateCreateDto>().ReverseMap();
     }
 }

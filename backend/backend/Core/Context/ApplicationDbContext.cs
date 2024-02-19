@@ -22,10 +22,10 @@ namespace backend.Core.Context
                 .WithMany(company => company.JobListings)
                 .HasForeignKey(job => job.CompanyId);
 
-            modelBuilder.Entity<Candidate>()
-                .HasOne(candidate => candidate.Job)
-                .WithMany(job => job.Candidates)
-                .HasForeignKey(candidate => candidate.JobId);
+            // modelBuilder.Entity<Candidate>()
+            //     .HasOne(candidate => candidate.Job)
+            //     .WithMany(job => job.Candidates)
+            //     .HasForeignKey(candidate => candidate.JobId);
 
             modelBuilder.Entity<Company>()
                 .Property(company => company.Size)

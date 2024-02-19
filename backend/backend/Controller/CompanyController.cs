@@ -25,22 +25,22 @@ namespace backend.Controller
         
         // Search All
         [HttpGet("search")]
-        public async Task<ActionResult<Response<List<Company>>>> SearchAll([FromQuery] CompanySearchQuery searchQuery)
+        public async Task<ActionResult<Response<List<CompanyResponseDto>>>> SearchAll([FromQuery] CompanySearchQuery searchQuery)
         {
             var response = await companyService.SearchCompanies(searchQuery);
             return response.IsSuccess ? Ok(response) : BadRequest(response);
         }
         
         // Get Company by id
-        [HttpGet("searchById/{id:long}")]
-        public async Task<ActionResult<Response<List<Company>>>> SearchById([FromRoute] long id)
+        [HttpGet("search/{id:long}")]
+        public async Task<ActionResult<Response<List<CompanyResponseDto>>>> SearchById([FromRoute] long id)
         {
             var response = await companyService.GetCompanyById(id);
             return response.IsSuccess ? Ok(response) : BadRequest(response);
         }
         
         // Delete Company by id
-        [HttpDelete("deleteById/{id:long}")]
+        [HttpDelete("delete/{id:long}")]
         public async Task<ActionResult<BaseResponse>> DeleteById([FromRoute] long id)
         {
             var response = await companyService.DeleteCompanyById(id);

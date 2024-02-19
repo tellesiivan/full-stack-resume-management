@@ -7,7 +7,7 @@ public interface ICompanyService
 {
     Task<Response<string>> CreateCompany(CompanyCreationDto companyCreationDto);
     
-    Task<Response<List<Core.Entities.Company>>> SearchCompanies(CompanySearchQuery searchQuery);
-    Task<Response<Core.Entities.Company>> GetCompanyById(long id);
+    Task<Response<List<CompanyResponseDto>>> SearchCompanies(CompanySearchQuery searchQuery);
+    Task<Response<CompanyResponseDto>> GetCompanyById(long id);
     Task<BaseResponse> DeleteCompanyById(long id);
 }

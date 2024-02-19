@@ -11,5 +11,5 @@ public class CandidatesResponseDto
     public string CoverLetter { get; set; } = string.Empty;
     public string ResumeUrl { get; set; } = string.Empty;
     public long JobId { get; set; }
-    public string JobTitle { get; set; } = string.Empty;
+
 }

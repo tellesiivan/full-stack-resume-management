@@ -11,8 +11,6 @@ public class JobResponseDto
     public string Description { get; set; } = string.Empty;
     public JobLevel JobLevel { get; set; }
     public long CompanyId { get; set; }
-    public ICollection<Entities.Candidate>? Candidates { get; set; }
-
     public string CompanyName { get; set; } = string.Empty;
 
 }
