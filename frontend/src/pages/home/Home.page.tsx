@@ -1,12 +1,12 @@
 import "./home.scss";
 
 const Home = () => {
-   return (
-      <div className="content home">
-         <h3>Welcome To Website</h3>
-         <br />
-         <br />
-         <span>
+	return (
+		<div className="content home">
+			<h3>Resume Management Full-Stack Demo</h3>
+			<br/>
+			<br/>
+			<span>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit fugiat iusto explicabo voluptatum,
             blanditiis libero eum tempora excepturi inventore labore nesciunt cupiditate commodi beatae. Neque, totam
             tempore. Esse itaque vitae, reiciendis dolores provident placeat sequi nam pariatur praesentium quaerat
@@ -16,8 +16,8 @@ const Home = () => {
             iste est placeat corrupti? Minima, mollitia hic dolorem porro molestiae nulla itaque incidunt veritatis
             sunt. Soluta!
          </span>
-      </div>
-   );
+		</div>
+	);
 };
 
 export default Home;

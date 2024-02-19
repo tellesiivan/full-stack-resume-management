@@ -26,7 +26,7 @@ namespace backend.Controller
             return response.IsSuccess ? Ok(response) : BadRequest(response);
         }
         
-        [HttpGet("search/{id:long}")]
+        [HttpGet("{id:long}")]
         public async Task<ActionResult<Response<JobResponseDto>>> GetJobById([FromRoute] long id) 
         {
             var response = await jobsService.GetJobById(id);

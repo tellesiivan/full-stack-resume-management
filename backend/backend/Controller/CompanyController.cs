@@ -32,7 +32,7 @@ namespace backend.Controller
         }
         
         // Get Company by id
-        [HttpGet("search/{id:long}")]
+        [HttpGet("{id:long}")]
         public async Task<ActionResult<Response<List<CompanyResponseDto>>>> SearchById([FromRoute] long id)
         {
             var response = await companyService.GetCompanyById(id);
